@@ -1,22 +1,35 @@
 import React from "react"
 import "./App.css" // Import the updated CSS file
 import useThingSpeakData from "./useThingSpeak"
-import Gauge from "./Gauge"
-import Metric from "./Metric"
+import Gauge from "./TemperatureGauge"
+import Metric from "./MoistureMetric"
 import Stats from "./Stats"
-import Charts from "./Charts"
+import Charts from "./RealTimeCharts"
 import ScatterWithTrendLine from "./Scatterplot"
 import MovingAverageChart from "./MovingLine"
+
+const DRY_VALUE = 1000
+const WET_VALUE = 200
 
 const App: React.FC = () => {
 	const feeds = useThingSpeakData()
 
 	const getLatestValues = () => {
-		if (feeds.length === 0) return {temp: 0, moisture: 0}
+		if (feeds.length === 0) return {temp: 0, moisture: 0, moisturePer: 0}
 		const latest = feeds[feeds.length - 1]
+		const rawMoisture = parseFloat(latest.field2)
+		var moisturePer = 0
+
+		if (rawMoisture > DRY_VALUE) moisturePer = 0
+		else if (rawMoisture < WET_VALUE) moisturePer = 100
+		else
+			moisturePer =
+				(100 * (DRY_VALUE - rawMoisture)) / (DRY_VALUE - WET_VALUE)
+
 		return {
 			temp: parseFloat(latest.field1),
 			moisture: parseFloat(latest.field2),
+			moisturePer,
 		}
 	}
 
@@ -34,7 +47,7 @@ const App: React.FC = () => {
 		}
 	}
 
-	const {temp, moisture} = getLatestValues()
+	const {temp, moisture, moisturePer} = getLatestValues()
 	const {avgTemp, avgMoisture, minTemp, maxTemp} = getStats()
 
 	return (
@@ -43,7 +56,7 @@ const App: React.FC = () => {
 
 			<div className='metrics-container'>
 				<Gauge temp={temp} />
-				<Metric moisture={moisture} />
+				<Metric moisture={moisturePer} />
 				<Stats
 					avgTemp={avgTemp}
 					avgMoisture={avgMoisture}
