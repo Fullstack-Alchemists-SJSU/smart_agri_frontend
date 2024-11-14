@@ -7,6 +7,7 @@ import Stats from "./Stats"
 import Charts from "./RealTimeCharts"
 import ScatterWithTrendLine from "./Scatterplot"
 import MovingAverageChart from "./MovingLine"
+import Chatbot from "./Chatbot"
 
 const DRY_VALUE = 1000
 const WET_VALUE = 200
@@ -14,22 +15,20 @@ const WET_VALUE = 200
 const App: React.FC = () => {
 	const feeds = useThingSpeakData()
 
+	const convertRawMoistureToPercent = (rawMoisture: number): number => {
+		if (rawMoisture > DRY_VALUE) return 0
+		else if (rawMoisture < WET_VALUE) return 100
+		else return (100 * (DRY_VALUE - rawMoisture)) / (DRY_VALUE - WET_VALUE)
+	}
+
 	const getLatestValues = () => {
 		if (feeds.length === 0) return {temp: 0, moisture: 0, moisturePer: 0}
 		const latest = feeds[feeds.length - 1]
-		const rawMoisture = parseFloat(latest.field2)
-		var moisturePer = 0
-
-		if (rawMoisture > DRY_VALUE) moisturePer = 0
-		else if (rawMoisture < WET_VALUE) moisturePer = 100
-		else
-			moisturePer =
-				(100 * (DRY_VALUE - rawMoisture)) / (DRY_VALUE - WET_VALUE)
 
 		return {
 			temp: parseFloat(latest.field1),
 			moisture: parseFloat(latest.field2),
-			moisturePer,
+			moisturePer: convertRawMoistureToPercent(parseFloat(latest.field2)),
 		}
 	}
 
@@ -59,7 +58,7 @@ const App: React.FC = () => {
 				<Metric moisture={moisturePer} />
 				<Stats
 					avgTemp={avgTemp}
-					avgMoisture={avgMoisture}
+					avgMoisture={moisturePer}
 					minTemp={minTemp}
 					maxTemp={maxTemp}
 				/>
@@ -71,6 +70,7 @@ const App: React.FC = () => {
 				<ScatterWithTrendLine feeds={feeds} />
 				<MovingAverageChart feeds={feeds} />
 			</div>
+			<Chatbot />
 		</div>
 	)
 }
