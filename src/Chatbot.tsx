@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from "react"
-import axios from "axios"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 
 const SYSTEM_PROMPT = `
 You are an AI assistant specializing in smart agriculture, with a focus on IoT-based crop management. You have access to real-time data from temperature and moisture sensors deployed in agricultural fields. Your primary function is to analyze this data and provide actionable insights to farmers for optimal crop management.
@@ -29,99 +30,113 @@ User: "What should be the moisture percentage of soil for planting rice?"
 `
 
 const Chat: React.FC = () => {
-	const [isOpen, setIsOpen] = useState(false)
-	const [message, setMessage] = useState("")
-	const [chatHistory, setChatHistory] = useState<string[]>([])
+  const [isOpen, setIsOpen] = useState(false)
+  const [message, setMessage] = useState("")
+  const [chatHistory, setChatHistory] = useState<string[]>([])
 
-	useEffect(() => {
-		sendMessageApi("hello")
-	}, [])
+  const apiKey = "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";
+  const assistantId = "asst_FMXwHMlHKd0ZZB3nf8s0zCZm"
 
-	const toggleChat = () => {
-		setIsOpen(!isOpen)
-	}
+  useEffect(() => {
 
-	const sendMessageApi = async (message: string) => {
-		try {
-			const response = await axios.post(
-				"https://api.openai.com/v1/chat/completions",
-				{
-					model: "gpt-3.5-turbo", // or another model you are using
-					messages: [
-						{role: "system", content: SYSTEM_PROMPT},
-						{role: "user", content: message},
-					],
-				},
-				{
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
-					},
-				}
-			)
+    if (!apiKey || !assistantId) {
+      console.error("API Key or Assistant ID is not defined in the environment variables.");
+      return;
+    }
+    sendMessageApi("hello");
+  }, []);
 
-			const botMessage = response.data.choices[0].message.content
-			setChatHistory((prev) => [...prev, `Bot: ${botMessage}`])
-		} catch (error) {
-			console.error("Error fetching response:", error)
-		}
+  const toggleChat = () => {
+    setIsOpen(!isOpen);
+  };
 
-		setMessage("")
-	}
+  const sendMessageApi = async (message: string) => {
+    if (!apiKey || !assistantId) {
+      console.error("API Key or Assistant ID is not defined.");
+      return;
+    }
 
-	const handleSendMessage = async () => {
-		if (message.trim() === "") return
+    try {
+      const response = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          model: "gpt-4o-mini", 
+          messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            { role: "user", content: message },
+          ],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+        }
+      );
 
-		// Add user message to chat history
-		setChatHistory([...chatHistory, `User: ${message}`])
+      const botMessage = response.data.choices[0].message.content;
 
-		await sendMessageApi(message)
-	}
+      setChatHistory((prev) => [...prev, `Bot: ${botMessage}`]);
+    } catch (error) {
+      console.error("Error fetching response:", error);
+    }
 
-	return (
-		<div>
-			{isOpen && (
+    setMessage("");
+  };
+
+  const handleSendMessage = async () => {
+    if (message.trim() === "") return;
+
+    // Add user message to chat history
+    setChatHistory([...chatHistory, `User: ${message}`]);
+
+    await sendMessageApi(message);
+  };
+
+  return (
+    <div>
+      {isOpen && (
 				<div className='fixed bottom-16 right-4 bg-white shadow-lg rounded-lg p-4 w-80 h-96 z-50'>
 					<div className='flex justify-between items-center mb-2'>
 						<h2 className='text-lg font-bold'>Chat</h2>
-						<button
-							onClick={toggleChat}
+            <button
+              onClick={toggleChat}
 							className='text-gray-500 hover:text-gray-700'>
-							✖
-						</button>
-					</div>
+              ✖
+            </button>
+          </div>
 					<div className='h-[75%] overflow-y-auto mb-2'>
-						{chatHistory.map((msg, index) => (
-							<>
+            {chatHistory.map((msg, index) => (
+              <>
 								<p key={index} className='text-gray-600 my-2'>
-									{msg}
-								</p>
-								<hr />
-							</>
-						))}
-					</div>
+                  {msg}
+                </p>
+                <hr />
+              </>
+            ))}
+          </div>
 					<div className='flex items-center'>
-						<input
+            <input
 							type='text'
-							value={message}
-							onChange={(e) => setMessage(e.target.value)}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
 							className='flex-grow border rounded-l-lg p-2'
 							placeholder='Type a message...'
-						/>
-						<button
-							onClick={handleSendMessage}
+            />
+            <button
+              onClick={handleSendMessage}
 							className='bg-blue-500 text-white rounded-r-lg p-2 hover:bg-blue-600 focus:outline-none'>
-							Send
-						</button>
-					</div>
-				</div>
-			)}
-			<button
-				onClick={toggleChat}
+              Send
+            </button>
+          </div>
+        </div>
+      )}
+      <button
+        onClick={toggleChat}
 				className='fixed bottom-4 right-4 bg-blue-500 text-white rounded-full p-3 shadow-lg hover:bg-blue-600 focus:outline-none z-50'>
-				💬
-			</button>
-		</div>
+        💬
+      </button>
+    </div>
 	)
 }
 
