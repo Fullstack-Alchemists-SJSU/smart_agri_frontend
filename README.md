@@ -42,15 +42,11 @@ npm start
 
 ## Features and Implementation
 ### Core Features
-Real-time Monitoring:
-Soil moisture and temperature data are collected and displayed in real-time.
-Data processed using calibrated algorithms for precise insights.
-Cloud Integration:
-Dual-cloud setup with AWS IoT Core and ThingSpeak for data storage and visualization.
-Interactive Dashboard:
-Responsive dashboard built with React, showcasing real-time readings, historical trends, and predictive insights.
-AI Chatbot Integration:
-Provides agricultural recommendations based on real-time sensor data.
+- Soil moisture and temperature data are collected and displayed in real-time.
+- Data processed using calibrated algorithms for precise insights.
+- Dual-cloud setup with AWS IoT Core and ThingSpeak for data storage and visualization.
+- Responsive dashboard built with React, showcasing real-time readings, historical trends, and predictive insights.
+- AI Chatbot Integration provides agricultural recommendations based on real-time sensor data.
 ### Additional Features
 Error Handling: Comprehensive mechanisms to ensure reliable data collection and transmission.
 Scalability: Designed for integration with additional sensors and modules, supporting future expansion.
