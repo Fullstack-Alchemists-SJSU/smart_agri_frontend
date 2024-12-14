@@ -1,46 +1,77 @@
-# Getting Started with Create React App
+# IoT Smart Agriculture System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Overview
 
-## Available Scripts
+The IoT Smart Agriculture System integrates modern IoT technologies with agriculture, utilizing a Raspberry Pi 5, DS18B20 temperature sensor, and a capacitive moisture sensor with an MCP3008 ADC. The system collects real-time data on soil moisture and temperature, transmitting it to AWS IoT Core and ThingSpeak for analysis and visualization. This project aims to optimize resource usage and provide actionable insights for sustainable farming.
 
-In the project directory, you can run:
+## Code Repositories
 
-### `npm start`
+- **Frontend Repository**: [Smart Agri Frontend](https://github.com/Fullstack-Alchemists-SJSU/smart_agri_frontend)
+- **Backend Repository**: [Smart Agri Backend](https://github.com/Fullstack-Alchemists-SJSU/smart_agri_backend)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Setup Instructions
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Hardware Setup
 
-### `npm test`
+1. Assemble the Raspberry Pi 5 with the DS18B20 temperature sensor and the capacitive moisture sensor.
+2. Connect the MCP3008 ADC to the Raspberry Pi for analog-to-digital conversion.
+3. Calibrate sensors using dry and saturated soil samples for accurate readings.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Frontend Setup
 
-### `npm run build`
+1. Clone the frontend repository:
+   git clone https://github.com/Fullstack-Alchemists-SJSU/smart_agri_frontend
+2.  Navigate to the directory:
+    cd smart_agri_frontend
+3. Install dependencies:
+    npm install
+4. Start the development server:
+    npm start
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Backend Setup
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the backend repository:
+git clone https://github.com/Fullstack-Alchemists-SJSU/smart_agri_backend
+2. Navigate to the project directory:
+cd smart_agri_backend
+3. Install dependencies:
+npm install
+4. Configure environment variables for AWS IoT Core and ThingSpeak.
+5. Start the backend server:
+npm start
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Features and Implementation
+### Core Features
+Real-time Monitoring:
+Soil moisture and temperature data are collected and displayed in real-time.
+Data processed using calibrated algorithms for precise insights.
+Cloud Integration:
+Dual-cloud setup with AWS IoT Core and ThingSpeak for data storage and visualization.
+Interactive Dashboard:
+Responsive dashboard built with React, showcasing real-time readings, historical trends, and predictive insights.
+AI Chatbot Integration:
+Provides agricultural recommendations based on real-time sensor data.
+### Additional Features
+Error Handling: Comprehensive mechanisms to ensure reliable data collection and transmission.
+Scalability: Designed for integration with additional sensors and modules, supporting future expansion.
 
-### `npm run eject`
+## Functional Tests
+### Temperature Sensor Validation:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Verifies DS18B20 sensor outputs accurate temperature readings.
+Status: ✅ Passed.
+Soil Moisture Sensor Calibration:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Tests the capacitive soil moisture sensor's calibration against dry and wet soil samples.
+Status: ✅ Passed.
+Cloud Communication Test:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Ensures successful data transmission to AWS IoT Core and ThingSpeak.
+Status: ✅ Passed.
+Dashboard Visualization:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Validates real-time updates and historical trend charts on the React dashboard.
+Status: ✅ Passed.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+The video demo has all the functional tests passing. Screenshots are not possible since its an Iot project with hardware realitime components which can be proved only in video. 
+Video Link - https://drive.google.com/file/d/158Ri0c_kD-zHv3yQAt_43dfxzW4A9_yw/view?usp=sharing 
