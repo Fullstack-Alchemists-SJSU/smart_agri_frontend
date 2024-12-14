@@ -57,20 +57,19 @@ Scalability: Designed for integration with additional sensors and modules, suppo
 
 ## Functional Tests
 ### Temperature Sensor Validation:
-
 Verifies DS18B20 sensor outputs accurate temperature readings.
 Status: ✅ Passed.
-Soil Moisture Sensor Calibration:
 
-### Tests the capacitive soil moisture sensor's calibration against dry and wet soil samples.
+### Soil Moisture Sensor Calibration:
+Tests the capacitive soil moisture sensor's calibration against dry and wet soil samples.
 Status: ✅ Passed.
-Cloud Communication Test:
 
-### Ensures successful data transmission to AWS IoT Core and ThingSpeak.
+###  Cloud Communication Test:
+Ensures successful data transmission to AWS IoT Core and ThingSpeak.
 Status: ✅ Passed.
-Dashboard Visualization:
 
-### Validates real-time updates and historical trend charts on the React dashboard.
+### Dashboard Visualization:
+Validates real-time updates and historical trend charts on the React dashboard.
 Status: ✅ Passed.
 
 The video demo has all the functional tests passing. Screenshots are not possible since its an Iot project with hardware realitime components which can be proved only in video. 
