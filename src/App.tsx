@@ -9,18 +9,22 @@ import ScatterWithTrendLine from "./Scatterplot"
 import MovingAverageChart from "./MovingLine"
 import Chatbot from "./Chatbot"
 
+// Constants for moisture value thresholds
 const DRY_VALUE = 1000
 const WET_VALUE = 200
 
 const App: React.FC = () => {
+	// Fetch data from ThingSpeak
 	const feeds = useThingSpeakData()
 
+	// Convert raw moisture value to percentage
 	const convertRawMoistureToPercent = (rawMoisture: number): number => {
 		if (rawMoisture > DRY_VALUE) return 0
 		else if (rawMoisture < WET_VALUE) return 100
 		else return (100 * (DRY_VALUE - rawMoisture)) / (DRY_VALUE - WET_VALUE)
 	}
 
+	// Get the latest temperature and moisture values
 	const getLatestValues = () => {
 		if (feeds.length === 0) return {temp: 0, moisture: 0, moisturePer: 0}
 		const latest = feeds[feeds.length - 1]
@@ -32,6 +36,7 @@ const App: React.FC = () => {
 		}
 	}
 
+	// Calculate statistics for temperature and moisture values
 	const getStats = () => {
 		if (feeds.length === 0)
 			return {avgTemp: 0, avgMoisture: 0, minTemp: 0, maxTemp: 0}

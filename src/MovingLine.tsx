@@ -12,6 +12,7 @@ import {
 } from "recharts"
 import {Feed} from "./useThingSpeak"
 
+// Calculate moving average for a given period
 const calculateMovingAverage = (data: number[], period: number) => {
 	let averages = []
 	for (let i = 0; i < data.length; i++) {

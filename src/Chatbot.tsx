@@ -8,10 +8,12 @@ const Chat: React.FC = () => {
 	const [assistantInstructions, setAssistantInstructions] =
 		useState<string>("")
 
+		// API key and assistant ID for OpenAI
 	const apiKey =
 		"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"
 	const assistantId = "asst_FMXwHMlHKd0ZZB3nf8s0zCZm"
 
+	// Fetch assistant instructions on component mount
 	useEffect(() => {
 		const fetchAssistantInstructions = async () => {
 			try {
@@ -51,10 +53,12 @@ const Chat: React.FC = () => {
 		fetchAssistantInstructions()
 	}, [])
 
+	// Toggle chat window visibility
 	const toggleChat = () => {
 		setIsOpen(!isOpen)
 	}
 
+	// Send a message to the assistant
 	const sendMessageApi = async (message: string) => {
 		if (!apiKey || !assistantInstructions) {
 			console.error(
@@ -109,6 +113,7 @@ const Chat: React.FC = () => {
 		setMessage("")
 	}
 
+	// Send the user's message to the assistant
 	const handleSendMessage = async () => {
 		if (message.trim() === "") return
 

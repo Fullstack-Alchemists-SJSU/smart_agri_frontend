@@ -11,6 +11,7 @@ export interface Feed {
 const useThingSpeakData = () => {
 	const [feeds, setFeeds] = useState<Feed[]>([])
 
+	// Fetch data from ThingSpeak
 	const fetchData = async () => {
 		try {
 			const response = await axios.get(
