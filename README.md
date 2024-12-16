@@ -68,6 +68,8 @@ Status: ✅ Passed.
 Validates real-time updates and historical trend charts on the React dashboard.
 Status: ✅ Passed.
 
+![Functional Tests Passing](frontend-mocktests.jpeg)
+
 ### Video of tests passing
 The video demo has all the functional tests passing. Screenshots are not possible since its an Iot project with hardware realitime components which can be proved only in video. 
 Video Link - https://drive.google.com/file/d/158Ri0c_kD-zHv3yQAt_43dfxzW4A9_yw/view?usp=sharing 
